@@ -1,0 +1,95 @@
+PyMUD Project Overview
+
+Project Name: PyMUD
+Version: MVP 1.0
+Created by: AutiTech
+Date: [Insert Date]
+Document Version: 1.0
+1. Purpose
+
+PyMUD is a web-based multi-user dungeon (MUD) platform designed to allow users to create, explore, and interact within text-based worlds. The platform integrates text-to-speech (TTS) capabilities, custom natural language processing (NLP), and flexible world-building mechanics. PyMUD focuses on accessibility and affordability by avoiding reliance on costly third-party AI services, making it an ideal solution for developers with limited budgets.
+2. Project Scope
+
+The PyMUD project will consist of two key engines:
+
+    World Builder Engine: Enables users to create and modify their own MUD worlds, including defining rooms, objects, and NPCs.
+    Game Engine: Supports player interactions, movement, and real-time exploration within the generated MUD world.
+
+The MVP will feature a robust graphical user interface (GUI), a secure login and registration system with AES-256 encryption, initial NLP functionality for command parsing and dialogue generation, and a TTS system for assigning unique voices to players and NPCs.
+3. Goals and Objectives
+
+Short-Term Goals (MVP):
+
+    Develop a fully functional web-based GUI for users to interact with.
+    Implement a secure login and registration system using AES-256 encryption.
+    Create a movement system with 12 possible directions (8 compass directions + in, out, up, down).
+    Introduce basic NLP to parse player commands and generate simple dialogue and world-building elements.
+    Integrate TTS to assign specific voices to players and NPCs.
+    Ensure scalability and low cost by avoiding external AI services.
+
+Long-Term Goals:
+
+    Expand the NLP system for more advanced interactions and world generation.
+    Enhance the World Builder Engine with additional customization features.
+    Introduce multiplayer capabilities and advanced NPC behaviors.
+
+4. Key Features
+
+    Login and Registration System:
+        AES-256 encryption for secure user credentials.
+        Unencrypted databases for world-building and game data to facilitate easy migrations.
+
+    Graphical User Interface (GUI):
+        A responsive, intuitive web interface for managing player interactions, world-building, and game control.
+        User dashboard for creating and navigating game worlds.
+
+    12-Directional Movement System:
+        Movement support for 8 compass directions (north, northeast, east, southeast, south, southwest, west, northwest) as well as in, out, up, and down.
+        Integration with the World Builder Engine for defining exits and valid movement paths.
+
+    NLP Integration (MVP):
+        Basic command parsing for player movement and interaction.
+        Templated dialogue generation for NPCs.
+        Simple world-building commands to create rooms and environments (e.g., "create a forest room").
+
+    Text-to-Speech (TTS) Integration:
+        Voice assignment for players and NPCs using TTS APIs (e.g., Google Cloud TTS, Amazon Polly).
+        Real-time vocal output for player and NPC interactions.
+
+5. Tech Stack
+
+    Backend Framework: Flask (handling requests, data, and interaction)
+    Frontend: HTML/CSS/JavaScript for the web-based GUI
+    Text-to-Speech (TTS): Google Cloud TTS or Amazon Polly for customizable voice output
+    NLP Engine: Custom-built NLP leveraging spaCy or similar open-source frameworks
+    Database: SQL or NoSQL for storing user data, world data, and game state
+
+6. Timeline and Milestones
+
+    MVP Development (Phase 1):
+        GUI, login/registration, and movement system: 2-4 weeks
+        Basic NLP and TTS functionality: 4-6 weeks
+        Integration of World Builder and Game Engine: 4-6 weeks
+
+    Post-MVP Expansion (Phase 2):
+        Expanding NLP features for complex interactions and world generation: TBD
+        Procedural world-building and real-time multiplayer integration: TBD
+
+7. Future Considerations
+
+    Affordability: PyMUD will remain free and open-source, ensuring developers and users with limited financial means can fully utilize the platform without subscription costs.
+    Modular Design: The system will be designed for easy expansion, allowing new features (e.g., combat systems, NPC AI) to be added without overhauling core architecture.
+    Community Contributions: Contributions from the open-source community will be encouraged to help improve and expand the platform over time.
+
+8. Risks and Challenges
+
+    Performance: Ensuring that the self-hosted NLP system scales effectively with growing data from users without sacrificing speed or accuracy.
+    Technical Complexity: Balancing the real-time interactions with the system's need to maintain low latency and ensure smooth gameplay.
+    Security: Protecting user data, while allowing for unencrypted game world data to ease migrations and updates.
+
+9. Contact Information
+
+Project Lead: Chaz
+Company: AutiTech
+Email: chazk@autitech.org
+Repository: https://github.com/ChazK86/PyMud

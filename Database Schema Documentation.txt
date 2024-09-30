@@ -1,0 +1,134 @@
+Database Schema Documentation
+
+Project Name: PyMUD
+Version: MVP 1.0
+Created by: AutiTech
+Date: [Insert Date]
+Document Version: 1.1
+1. Purpose
+
+This document outlines the database schema for PyMUD, focusing on secure storage of user data, dynamic world-building elements, player interactions, and real-time game state management. It now includes a feature allowing players to assign custom Text-to-Speech (TTS) voices to other players and NPCs, which only affects how these voices are heard on their client, enhancing the immersive and customizable player experience.
+2. Database Design Overview
+
+The database schema supports the following core components:
+
+    User Authentication & Player Profiles: Secure storage for user credentials, player stats, and personal preferences, including voice assignments.
+    World Data: Manages rooms, objects, NPCs, and world-building components created by users and developers.
+    Real-Time Game Data: Tracks player location, inventory, and interactions with the game world.
+    Voice Assignment System: Enables players to assign custom TTS voices to themselves, other players, and NPCs, with client-side control over voice output.
+
+3. Core Tables
+3.1 Users Table
+Column Name	Data Type	Description
+user_id	INT	Unique identifier for each user
+username	VARCHAR	Username for login
+password	VARCHAR	Encrypted user password (AES-256)
+email	VARCHAR	User email address
+created_at	TIMESTAMP	Timestamp of when the account was created
+last_login	TIMESTAMP	Timestamp of the user’s last login
+voice_id	VARCHAR	Default TTS voice ID assigned to the player’s account
+voice_preferences	JSON	JSON object storing user-assigned TTS voices for other players and NPCs
+
+    Purpose: Manages user authentication and preferences. The voice_preferences field allows users to assign custom TTS voices to specific players and NPCs, which only affects the user’s own client.
+
+3.2 Player Profiles Table
+Column Name	Data Type	Description
+player_id	INT	Unique identifier linked to the user_id in the Users table
+user_id	INT	Foreign key to the Users table
+health	INT	Player health points
+strength	INT	Player strength attribute
+inventory	JSON	JSON object containing player inventory items
+location_id	INT	Foreign key to the current room the player is located in
+stats	JSON	Additional player stats such as speed, agility, etc.
+
+    Purpose: Tracks player-specific data such as health, inventory, and location within the game world.
+
+3.3 Rooms Table
+Column Name	Data Type	Description
+room_id	INT	Unique identifier for each room
+name	VARCHAR	Room name (e.g., “Dark Forest,” “Castle Entrance”)
+description	TEXT	Text description of the room
+exits	JSON	JSON object defining exits and directions (north, up)
+npc_ids	JSON	JSON array of NPCs currently in the room
+object_ids	JSON	JSON array of objects currently in the room
+
+    Purpose: Stores the information for rooms in the game world, including room descriptions, available exits, and entities within the room.
+
+3.4 Objects Table
+Column Name	Data Type	Description
+object_id	INT	Unique identifier for each object
+name	VARCHAR	Object name (e.g., “Sword,” “Potion”)
+description	TEXT	Text description of the object
+weight	INT	Weight of the object
+room_id	INT	Foreign key to the room where the object is located
+player_id	INT	Foreign key to the player inventory, if picked up
+properties	JSON	JSON object containing object-specific attributes
+
+    Purpose: Stores information about objects in the game, tracking their properties, location, and current ownership (room or player inventory).
+
+3.5 NPC Table
+Column Name	Data Type	Description
+npc_id	INT	Unique identifier for each NPC
+name	VARCHAR	NPC name
+description	TEXT	Text description of the NPC
+room_id	INT	Foreign key to the room where the NPC is located
+dialogue	JSON	JSON object containing dialogue options for the NPC
+behavior	VARCHAR	Behavior type (static, roaming, aggressive)
+stats	JSON	JSON object containing NPC stats (health, strength)
+voice_id	VARCHAR	Default Amazon Polly voice assigned to the NPC
+
+    Purpose: Stores NPC data such as stats, dialogue, and behaviors. The voice_id stores the NPC’s default voice, which can be overridden by individual users' custom preferences.
+
+4. Supporting Tables
+4.1 Voice Profiles Table
+Column Name	Data Type	Description
+voice_id	VARCHAR	Unique identifier for each TTS voice (Amazon Polly ID)
+name	VARCHAR	Human-readable name for the voice (e.g., “Matthew,” “Joanna”)
+settings	JSON	JSON object for voice settings (speed, pitch, etc.)
+
+    Purpose: Stores available TTS voices and their settings. These voices can be assigned to players, NPCs, or specific other players according to user preferences.
+
+5. Relationships Between Tables
+
+    Users ↔ Player Profiles: One-to-one relationship. Each user has a corresponding player profile that stores their in-game attributes.
+    Rooms ↔ Objects: One-to-many relationship. A room can contain multiple objects, and objects can only exist in one room or a player’s inventory.
+    Rooms ↔ NPCs: One-to-many relationship. A room can contain multiple NPCs, each of which interacts with players according to predefined behaviors.
+    Players ↔ Objects: One-to-many relationship. Players can carry multiple objects in their inventory, tracked by the Objects table.
+    NPCs ↔ Voice Profiles: One-to-one relationship. Each NPC has a default voice, but this can be overridden by individual players for their client-side experience.
+
+6. New Feature: Custom TTS Voice Assignments
+6.1 Voice Preferences
+
+    Player Customization: Players can assign custom TTS voices to themselves, other players, or NPCs. These assignments will be stored in the Users table under the voice_preferences field as a JSON object. This object will map specific player or NPC IDs to voice IDs, ensuring that the custom voice is applied only on the user’s client.
+
+Example JSON Structure (voice_preferences)
+{"player_2": "Joanna", "npc_5": "Matthew"}
+
+    Client-Side Playback: When interacting with other players or NPCs, the custom voice preferences will be applied to the TTS voice playback on the client’s device, ensuring that each player has full control over how they hear others in the game.
+
+6.2 Voice Profile Management
+
+    Default and Custom Voices: Each player and NPC will have a default voice assigned by the system, but individual players can override these settings on their own client. The system will check the voice_preferences field before applying the default TTS voice.
+    Voice Assignment Interface: In the GUI, players will have the option to assign custom TTS voices to other players and NPCs through a simple dropdown or selection tool, providing an intuitive way to manage these preferences.
+
+7. Future Expansion
+
+    Advanced Voice Customization: In future updates, players will be able to further customize voices by adjusting pitch, speed, and intonation for their assigned voices.
+    Multilingual Support: Support for additional languages and dialects in the TTS system to further enhance player experience and accessibility.
+    Quest and Combat Logs: Additional tables may be introduced to store quest progress, combat logs, and other event data.
+
+8. Security Considerations
+
+    Password Encryption: All user passwords will be encrypted using AES-256 for secure storage.
+    TTS Voice Data: Sensitive data like Amazon Polly API keys will be stored securely and not exposed in the database.
+    **User PrivacyHere’s the rest of the Database Schema Documentation based on your request for custom TTS voice assignments:
+
+8. Security Considerations
+
+    Password Encryption: All passwords stored in the Users table will be encrypted using AES-256 to ensure data security.
+    TTS Voice Data: Sensitive data like Amazon Polly API keys will be securely managed and not exposed directly in the database.
+    User Privacy: Custom voice assignments will only affect the client-side experience, ensuring that players’ voice preferences are isolated to their own interactions without affecting other users’ gameplay.
+
+9. Conclusion
+
+The updated database schema for PyMUD includes the ability for players to assign custom TTS voices to themselves, other players, and NPCs. These assignments are handled through client-side voice preferences, providing each player with full control over their auditory experience. The schema is designed to be flexible, scalable, and secure, with future-proofing for expansions like advanced customization and multilingual support.

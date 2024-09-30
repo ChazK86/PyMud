@@ -1,0 +1,92 @@
+MVP Features & Functionality Document
+
+Project Name: PyMUD
+Version: MVP 1.0
+Created by: AutiTech
+Date: [Insert Date]
+Document Version: 1.0
+1. Overview
+
+This document outlines the core features and functionality that will be included in the MVP of PyMUD. The MVP will focus on establishing the essential components of the PyMUD platform, including a secure login system, a graphical user interface (GUI), basic natural language processing (NLP) for player interactions, and foundational movement and world-building capabilities. These features will provide the framework for future expansions and demonstrate the core direction of the project.
+2. Key Features
+2.1 Login & Registration System
+
+    Encryption: User login credentials will be encrypted using AES-256, ensuring secure storage and transmission of sensitive information.
+    Database Structure: User information (encrypted credentials) will be stored in a SQL or NoSQL database. Other game-related data (e.g., world data, NPCs) will remain unencrypted to ease migration and updates.
+    User Authentication: A simple, secure registration and login system will allow users to create accounts and authenticate using their credentials.
+
+2.2 Graphical User Interface (GUI)
+
+    Layout: A clean, user-friendly web-based interface will be implemented to allow users to navigate the MUD world, access their accounts, and interact with game elements. The GUI will provide an accessible dashboard for both players and creators.
+    Responsiveness: The interface will be responsive, supporting multiple devices (desktop, tablet, mobile).
+    Customization: Initial UI elements will focus on world-building and exploration, allowing room for customization in future iterations.
+
+2.3 12-Directional Movement System
+
+    Directions: Players will be able to move in 12 directions: the eight compass directions (north, northeast, east, southeast, south, southwest, west, northwest), as well as "up," "down," "in," and "out."
+    Integration with World Builder: The movement system will integrate with the World Builder Engine, allowing users to define valid movement paths for each room.
+    Command Parsing: The movement system will work through the NLP engine, which will parse player commands and execute the appropriate movement action.
+
+2.4 Basic Natural Language Processing (NLP)
+
+    Command Parsing: The MVP will include a basic command parsing system for interpreting player input. Commands such as "move north," "look at object," and "talk to NPC" will be recognized and executed.
+    Dialogue Generation: NPCs will have simple, pre-generated dialogue templates. When interacting with NPCs, players will receive dynamic responses based on their input.
+    World Generation: Users will be able to use simple commands to generate rooms and environments (e.g., "create a forest room"). The system will return a basic description based on predefined templates.
+
+2.5 Text-to-Speech (TTS) Integration
+
+    Voice Assignment: Each player and NPC will have a unique voice assigned to them through the TTS system. The TTS API (Google Cloud TTS, Amazon Polly, etc.) will be used to generate speech dynamically based on player and NPC interactions.
+    Real-Time Response: When a player or NPC responds, their text will be converted into speech using their assigned voice, providing an auditory feedback layer to the MUD.
+
+3. Functionality
+3.1 User Interaction Flow
+
+    Login/Registration: Users will create an account and log in using their credentials. Once authenticated, they will be directed to the main game dashboard.
+    World Navigation: After logging in, users can begin navigating the MUD world using the 12-directional movement system. Rooms and environments will load based on the player’s location and actions.
+    Command Input: Players will input text commands (e.g., “move north,” “talk to NPC”), and the NLP engine will parse the command and perform the associated action.
+    World Building: Users can create new rooms, objects, and NPCs through simple text commands. The World Builder Engine will interpret these commands and generate the requested environment or object.
+
+3.2 Backend System
+
+    Flask Backend: The Flask backend will handle user requests (e.g., movement, world-building, NPC interactions) and communicate with the frontend to display updated content. It will also manage user authentication and ensure encrypted data is securely stored.
+    Database Integration: The system will connect to a SQL/NoSQL database to store user credentials (encrypted), world data, and game states. Schema updates will be carefully managed to ensure easy migration without affecting unencrypted game data.
+
+3.3 Data Flow
+
+    Login & Registration: User credentials are securely encrypted and stored in the database. Upon login, authentication is handled through Flask, allowing users access to the MUD world.
+    World Interaction: Player commands are processed by the NLP engine, which communicates with the Game Engine to execute the appropriate action (e.g., moving, interacting with NPCs).
+    TTS Interaction: When a player or NPC speaks, the system calls the TTS API, which generates the speech and plays it in real-time based on the assigned voice.
+
+4. System Architecture
+Frontend
+
+    HTML/CSS/JavaScript for responsive design and dynamic interaction
+    User interface for movement, world-building, and NPC interaction
+
+Backend
+
+    Flask (Python) to handle user requests, movement actions, and interactions with the database
+    API integration for TTS system
+
+Database
+
+    SQL or NoSQL for user credentials, world data, game states
+    User credential encryption with AES-256
+
+NLP
+
+    Custom NLP engine using spaCy or another open-source framework
+    Command parsing and text-based generation for movement, interactions, and dialogue
+
+TTS
+
+    Text-to-Speech system using Google Cloud TTS, Amazon Polly, or another TTS API
+
+5. Future Expansion
+
+While the MVP will lay the groundwork for the core systems, the following features are planned for future development:
+
+    Advanced NLP: Expanding the NLP system to handle more complex interactions, dynamic world generation, and deeper NPC conversations.
+    Expanded World Builder: Allowing users to create more detailed and interactive worlds, with procedural generation options.
+    Multiplayer Support: Real-time player interaction in shared MUD environments using WebSockets or similar technology.
+    Combat System & Quests: Introducing game mechanics like combat, quest creation, and NPC-driven events.
